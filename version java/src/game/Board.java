@@ -1,16 +1,21 @@
 
 package game;
 
+import java.util.Random;
+import java.util.ArrayList;
+
 public class Board {
 
   private int width;
   private int height;
   private Tile[][] grid;
 
-  public Board(int width, int height) {
+  public Board(int width, int height, int nbBombes) {
     this.width = width;
     this.height = height;
     createGrid();
+    generateBombe(nbBombes);
+    calculateNumbers();
   }
 
   public void createGrid() {
@@ -23,7 +28,34 @@ public class Board {
   }
 
   public void calculateNumbers() {
-    
+    for (int j = 0; j<this.height; j++) {
+      for (int i = 0; i<this.width; i++) {
+        if (!(this.grid[j][i] instanceof Bombe)) {
+          int value = countBombe(consvois(i,j));
+          ((Number)this.grid[j][i]).setValue(value);
+        }
+      }
+    }
+  }
+
+  public int randNum(int min, int max) {
+    Random rand = new Random();
+    int num = rand.nextInt((max - min) + 1) + min;
+    return num;
+  }
+
+  public void generateBombe(int nb) {
+    int cpt = 0;
+    Random rand;
+    while(cpt != nb) {
+      int randX = randNum(0, this.height - 1);
+      int randY = randNum(0, this.width - 1);
+      Tile tile = this.grid[randY][randX];
+      if (!(tile instanceof Bombe)) {
+        this.grid[randY][randX] = new Bombe(randX,randY);
+        cpt += 1;
+      }
+    }
   }
 
   public boolean isInIndex(int i, int j) {
@@ -45,7 +77,7 @@ public class Board {
   public int countBombe(ArrayList<Tile> listTile) {
     int cpt = 0;
     for (Tile tile : listTile) {
-      if (tile.isBombe()) {
+      if (tile instanceof Bombe) {
         cpt += 1;
       }
     }

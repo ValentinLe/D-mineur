@@ -24,10 +24,6 @@ public class Number extends Tile {
     return this.discover;
   }
 
-  public boolean isBombe() {
-    return false;
-  }
-
   public void setValue(int newValue) {
     this.value = newValue;
   }
