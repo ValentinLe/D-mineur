@@ -18,6 +18,18 @@ public class Board {
     calculateNumbers();
   }
 
+  public Tile[][] getGrid() {
+    return this.grid;
+  }
+
+  public int getWidth() {
+    return this.width;
+  }
+
+  public int getHeight() {
+    return this.height;
+  }
+
   public void createGrid() {
     this.grid = new Tile[this.height][this.width];
     for (int j = 0; j<this.height; j++) {
