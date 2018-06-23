@@ -1,3 +1,4 @@
+
 import tkinter as tk
 import fonctions as fct
 import interfaceGrafique as ig
@@ -13,7 +14,7 @@ class Frame_param:
         self.textInfo = tk.Text(self.fen,width=60,height = 3)
         self.textInfo.config(state=tk.DISABLED)
         self.textInfo.pack()
-
+        
         cadre = tk.Frame(self.fen)
 
         ct = tk.Frame(cadre)

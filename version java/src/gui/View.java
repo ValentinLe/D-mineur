@@ -26,7 +26,9 @@ public class View extends JPanel {
     for (int j = 0; j<this.b.getHeight(); j++) {
       for (int i = 0; i<this.b.getWidth(); i++) {
         g.drawRect(i*sizeTile,j*sizeTile,sizeTile,sizeTile);
-        g.drawString(grid[j][i].toString(),i*sizeTile + (sizeTile/2),j*sizeTile + (sizeTile/2));
+        if (grid[j][i].isDiscover()) {
+          g.drawString(grid[j][i].toString(),i*sizeTile + (sizeTile/2),j*sizeTile + (sizeTile/2));
+        }
       }
     }
   }
