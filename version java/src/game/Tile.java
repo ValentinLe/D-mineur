@@ -9,6 +9,7 @@ public class Tile {
   private boolean discover;
   private boolean bombe;
   private boolean flag;
+  private boolean bombeClicked;
 
 
   public Tile(int x, int y, int value) {
@@ -18,6 +19,7 @@ public class Tile {
     this.discover = false;
     this.bombe = false;
     this.flag = false;
+    this.bombeClicked = false;
   }
 
   public Tile(int x, int y) {
@@ -48,6 +50,10 @@ public class Tile {
     return this.bombe;
   }
 
+  public boolean isBombeClicked() {
+    return this.bombeClicked;
+  }
+
   public void setValue(int newValue) {
     this.value = newValue;
   }
@@ -62,6 +68,10 @@ public class Tile {
 
   public void setDiscover(boolean newDiscover) {
     this.discover = newDiscover;
+  }
+
+  public void setBombeClcicked(boolean newBombeClicked) {
+    this.bombeClicked = newBombeClicked;
   }
 
   public String toString() {

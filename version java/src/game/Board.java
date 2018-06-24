@@ -193,6 +193,7 @@ public class Board extends AbstractModelListener {
         ArrayList<Tile> listPropagation = this.propagation(tileClic);
         this.setDiscoverAll(listPropagation);
       } else if (tileClic.isBombe()) {
+        tileClic.setBombeClcicked(true);
         this.over = true;
       }
       this.fireChange();

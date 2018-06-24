@@ -30,7 +30,11 @@ public class View extends JPanel implements ModelListener {
         if (grid[j][i].isDiscover() && !grid[j][i].isFlag()) {
           g.drawString(grid[j][i].toString(),i*sizeTile + (sizeTile/2),j*sizeTile + (sizeTile/2));
         } else if (grid[j][i].isBombe() && this.b.isOver()) {
-          g.drawString(grid[j][i].toString(),i*sizeTile + (sizeTile/2),j*sizeTile + (sizeTile/2));
+          if (grid[j][i].isBombeClicked()) {
+            g.drawString("X",i*sizeTile + (sizeTile/2),j*sizeTile + (sizeTile/2));
+          } else {
+            g.drawString(grid[j][i].toString(),i*sizeTile + (sizeTile/2),j*sizeTile + (sizeTile/2));
+          }
         } else if (!grid[j][i].isDiscover() && grid[j][i].isFlag()) {
           g.drawString("F",i*sizeTile + (sizeTile/2),j*sizeTile + (sizeTile/2));
         }
