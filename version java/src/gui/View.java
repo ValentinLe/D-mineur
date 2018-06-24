@@ -8,13 +8,14 @@ import java.awt.event.*;
 import java.awt.event.KeyEvent;
 import game.*;
 
-public class View extends JPanel {
+public class View extends JPanel implements ModelListener {
 
   private Board b;
   private int sizeTile;
 
   public View(Board b, int sizeTile) {
     this.b = b;
+    this.b.addListener(this);
     this.sizeTile = sizeTile;
     this.setPreferredSize(new Dimension(b.getWidth()*sizeTile + 1, b.getHeight()*sizeTile + 1));
   }
@@ -26,10 +27,19 @@ public class View extends JPanel {
     for (int j = 0; j<this.b.getHeight(); j++) {
       for (int i = 0; i<this.b.getWidth(); i++) {
         g.drawRect(i*sizeTile,j*sizeTile,sizeTile,sizeTile);
-        if (grid[j][i].isDiscover()) {
+        if (grid[j][i].isDiscover() && !grid[j][i].isFlag()) {
           g.drawString(grid[j][i].toString(),i*sizeTile + (sizeTile/2),j*sizeTile + (sizeTile/2));
+        } else if (grid[j][i].isBombe() && this.b.isOver()) {
+          g.drawString(grid[j][i].toString(),i*sizeTile + (sizeTile/2),j*sizeTile + (sizeTile/2));
+        } else if (!grid[j][i].isDiscover() && grid[j][i].isFlag()) {
+          g.drawString("F",i*sizeTile + (sizeTile/2),j*sizeTile + (sizeTile/2));
         }
       }
     }
+  }
+
+  @Override
+  public void update(Object src) {
+    this.repaint();
   }
 }

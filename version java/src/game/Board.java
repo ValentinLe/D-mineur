@@ -3,8 +3,9 @@ package game;
 
 import java.util.Random;
 import java.util.ArrayList;
+import gui.AbstractModelListener;
 
-public class Board {
+public class Board extends AbstractModelListener {
 
   private int width;
   private int height;
@@ -18,7 +19,6 @@ public class Board {
     createGrid();
     generateBombe(nbBombes);
     calculateNumbers();
-    clic(this.grid[0][0]);
   }
 
   public Tile[][] getGrid() {
@@ -31,6 +31,10 @@ public class Board {
 
   public int getHeight() {
     return this.height;
+  }
+
+  public boolean isOver() {
+    return this.over;
   }
 
   public void createGrid() {
@@ -122,12 +126,6 @@ public class Board {
     return listTransfertRes;
   }
 
-  public void addAllTile(ArrayList<Tile> listRes, ArrayList<Tile> listAdd) {
-    for (Tile tile : listAdd) {
-      listRes.add(tile);
-    }
-  }
-
   public ArrayList<Tile> propagation(Tile initTile) {
     ArrayList<Tile> listFinal = new ArrayList<>();
     ArrayList<Tile> listTransfert = new ArrayList<>();
@@ -151,7 +149,7 @@ public class Board {
         ArrayList<Tile> voisins = this.consvois(tile.getX(), tile.getY());
         for(Tile vois : voisins) {
           if (!listFinal.contains(vois) && !listTransfert.contains(vois) &&
-          !listPropagation.contains(vois)) {
+          !listPropagation.contains(vois) && !vois.isFlag()) {
             listPropagation.add(vois);
           }
         }
@@ -178,12 +176,26 @@ public class Board {
     return true;
   }
 
+  public void flagTile(Tile tile) {
+    if (!tile.isDiscover()) {
+      if (tile.isFlag()) {
+        tile.setFlag(false);
+      } else {
+        tile.setFlag(true);
+      }
+    }
+    this.fireChange();
+  }
+
   public void clic(Tile tileClic) {
-    if (!tileClic.isBombe() && !tileClic.isDiscover()) {
-      ArrayList<Tile> listPropagation = this.propagation(tileClic);
-      this.setDiscoverAll(listPropagation);
-    } else if (tileClic.isBombe()) {
-      this.over = true;
+    if (!this.over && !tileClic.isFlag()) {
+      if (!tileClic.isBombe() && !tileClic.isDiscover()) {
+        ArrayList<Tile> listPropagation = this.propagation(tileClic);
+        this.setDiscoverAll(listPropagation);
+      } else if (tileClic.isBombe()) {
+        this.over = true;
+      }
+      this.fireChange();
     }
   }
 

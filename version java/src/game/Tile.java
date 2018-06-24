@@ -57,7 +57,7 @@ public class Tile {
   }
 
   public void setFlag(boolean newFlag) {
-    this.flag = flag;
+    this.flag = newFlag;
   }
 
   public void setDiscover(boolean newDiscover) {
