@@ -1,1 +1,0 @@
-run "jeux.py" to play
