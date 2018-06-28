@@ -11,15 +11,17 @@ import game.*;
 public class Interface extends JFrame {
 
   private Board b;
+  private View view;
   private int tileSize;
 
   public Interface(Board b) {
     this.setTitle("Demineur");
     this.b = b;
-    this.tileSize = getTileSize();
 
-    View view = new View(b, 83);
+    this.view = new View(b, 10);
     view.setBackground(Color.GREEN);
+
+    this.tileSize = getTileSize();
 
     this.setLayout(new GridBagLayout());
     GridBagConstraints gc = new GridBagConstraints();
@@ -66,20 +68,26 @@ public class Interface extends JFrame {
     this.setLocationRelativeTo(null);
     this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     this.setVisible(true);
+    this.tileSize = getTileSize();
+    this.repaint();
   }
 
   public int getTileSize() {
     Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
     Insets insets = Toolkit.getDefaultToolkit().getScreenInsets(getGraphicsConfiguration());
-    int undecoratedHeight = insets.bottom + insets.top;
+    Insets insetsWindow = this.getInsets();
+    int undecoratedHeight = insets.bottom + insets.top + insetsWindow.top;
     int undecoratedWidth = insets.left + insets.right;
+    int width = Math.toIntExact(Math.round(screenSize.getWidth())) - undecoratedWidth;
+    int height = Math.toIntExact(Math.round(screenSize.getHeight())) - undecoratedHeight;
+    System.out.println(" dkeo : ");
 
-    int width = (int)Math.round(screenSize.getWidth()) - undecoratedWidth;
-    int height = (int)Math.round(screenSize.getHeight()) - undecoratedHeight;
-    int sizeWidth = Math.round(width/this.b.getWidth());
-    int sizeHeight = Math.round(height/this.b.getHeight());
+    int sizeWidth = Math.toIntExact(Math.round(width/((double)this.b.getWidth())));
+    int sizeHeight = Math.toIntExact(Math.round(height/((double)this.b.getHeight())));
+
     int min = Math.min(sizeWidth,sizeHeight);
     System.out.println("" + sizeWidth + " " + sizeHeight + " " + min);
+    this.view.setSizeTile(min);
     return min;
   }
 }
