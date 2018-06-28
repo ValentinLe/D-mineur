@@ -67,8 +67,8 @@ public class Board extends AbstractModelListener {
     int cpt = 0;
     Random rand;
     while(cpt != nb) {
-      int randX = randNum(0, this.height - 1);
-      int randY = randNum(0, this.width - 1);
+      int randX = randNum(0, this.width - 1);
+      int randY = randNum(0, this.height - 1);
       Tile tile = this.grid[randY][randX];
       if (!tile.isBombe()) {
         this.grid[randY][randX].setBombe(true);

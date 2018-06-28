@@ -13,15 +13,15 @@ public class Interface extends JFrame {
   private Board b;
   private View view;
   private int tileSize;
+  private boolean fullScreen;
 
-  public Interface(Board b) {
+  public Interface(Board b, boolean fullScreen) {
     this.setTitle("Demineur");
     this.b = b;
+    this.fullScreen = fullScreen;
 
     this.view = new View(b, 10);
     view.setBackground(Color.GREEN);
-
-    this.tileSize = getTileSize();
 
     this.setLayout(new GridBagLayout());
     GridBagConstraints gc = new GridBagConstraints();
@@ -64,30 +64,39 @@ public class Interface extends JFrame {
     });
 
     this.setExtendedState(JFrame.MAXIMIZED_BOTH);
-    //this.setUndecorated(false);
+    this.setUndecorated(this.fullScreen);
     this.setLocationRelativeTo(null);
     this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     this.setVisible(true);
     this.tileSize = getTileSize();
+    this.view.setSizeTile(this.tileSize);
     this.repaint();
   }
 
-  public int getTileSize() {
+  public Integer getTileSize() {
     Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
     Insets insets = Toolkit.getDefaultToolkit().getScreenInsets(getGraphicsConfiguration());
     Insets insetsWindow = this.getInsets();
-    int undecoratedHeight = insets.bottom + insets.top + insetsWindow.top;
-    int undecoratedWidth = insets.left + insets.right;
+
+    int undecoratedHeight;
+    int undecoratedWidth;
+
+    if (!this.fullScreen) {
+      undecoratedWidth = insets.left + insets.right;
+      undecoratedHeight = insets.bottom + insets.top + insetsWindow.top;
+    } else {
+      undecoratedWidth = 0;
+      undecoratedHeight = 0;
+    }
+
     int width = Math.toIntExact(Math.round(screenSize.getWidth())) - undecoratedWidth;
     int height = Math.toIntExact(Math.round(screenSize.getHeight())) - undecoratedHeight;
-    System.out.println(" dkeo : ");
 
     int sizeWidth = Math.toIntExact(Math.round(width/((double)this.b.getWidth())));
     int sizeHeight = Math.toIntExact(Math.round(height/((double)this.b.getHeight())));
 
     int min = Math.min(sizeWidth,sizeHeight);
-    System.out.println("" + sizeWidth + " " + sizeHeight + " " + min);
-    this.view.setSizeTile(min);
+
     return min;
   }
 }
