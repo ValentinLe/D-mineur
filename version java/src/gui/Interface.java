@@ -12,23 +12,31 @@ public class Interface extends JFrame {
 
   private Board b;
   private View view;
+  private JPanel pauseMenu;
   private int tileSize;
-  private boolean fullScreen;
 
-  public Interface(Board b, boolean fullScreen) {
+  public Interface(Board b) {
     this.setTitle("Demineur");
     this.b = b;
-    this.fullScreen = fullScreen;
 
     this.view = new View(b, 10);
     view.setBackground(Color.GREEN);
 
-    this.setLayout(new GridBagLayout());
-    GridBagConstraints gc = new GridBagConstraints();
-    gc.gridx = 0;
-    gc.gridy = 0;
+    this.pauseMenu = new JPanel(new GridLayout(2,1));
+    JButton bRestart = new JButton("Restart");
+    this.pauseMenu.add(bRestart);
 
-    this.add(view, gc);
+    JButton bQuit = new JButton("Quit");
+    bQuit.addActionListener(new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        Interface.this.dispose();
+      }
+    });
+    this.pauseMenu.add(bQuit);
+
+    this.add(view);
+    //this.add(this.pauseMenu);
 
     view.addMouseListener(new MouseListener() {
         @Override
@@ -63,8 +71,27 @@ public class Interface extends JFrame {
         public void mouseExited(MouseEvent e) {}
     });
 
+    this.addKeyListener(new KeyListener(){
+       @Override
+       public void keyPressed(KeyEvent e) {
+          if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+
+          }
+       }
+
+        @Override
+        public void keyTyped(KeyEvent e) {
+
+        }
+
+        @Override
+        public void keyReleased(KeyEvent e) {
+
+        }
+    });
+
     this.setExtendedState(JFrame.MAXIMIZED_BOTH);
-    this.setUndecorated(this.fullScreen);
+    this.setUndecorated(true);
     this.setLocationRelativeTo(null);
     this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     this.setVisible(true);
@@ -74,29 +101,16 @@ public class Interface extends JFrame {
   }
 
   public Integer getTileSize() {
-    Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-    Insets insets = Toolkit.getDefaultToolkit().getScreenInsets(getGraphicsConfiguration());
     Insets insetsWindow = this.getInsets();
 
-    int undecoratedHeight;
-    int undecoratedWidth;
+    int width = this.getWidth();
+    int height = this.getHeight();
 
-    if (!this.fullScreen) {
-      undecoratedWidth = insets.left + insets.right;
-      undecoratedHeight = insets.bottom + insets.top + insetsWindow.top;
-    } else {
-      undecoratedWidth = 0;
-      undecoratedHeight = 0;
-    }
-
-    int width = Math.toIntExact(Math.round(screenSize.getWidth())) - undecoratedWidth;
-    int height = Math.toIntExact(Math.round(screenSize.getHeight())) - undecoratedHeight;
-
-    int sizeWidth = Math.toIntExact(Math.round(width/((double)this.b.getWidth())));
-    int sizeHeight = Math.toIntExact(Math.round(height/((double)this.b.getHeight())));
+    int sizeWidth = Math.round(width/this.b.getWidth());
+    int sizeHeight = Math.round(height/this.b.getHeight());
 
     int min = Math.min(sizeWidth,sizeHeight);
 
-    return min;
+    return min - 1;
   }
 }

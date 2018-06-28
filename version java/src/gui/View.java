@@ -18,6 +18,7 @@ public class View extends JPanel implements ModelListener {
     this.b.addListener(this);
     this.sizeTile = sizeTile;
     this.setPreferredSize(new Dimension(b.getWidth()*sizeTile, b.getHeight()*sizeTile));
+    this.setMinimumSize(new Dimension(100,100));
   }
 
   @Override
