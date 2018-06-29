@@ -14,16 +14,26 @@ public class Interface extends JFrame {
   private View view;
   private JPanel pauseMenu;
   private int tileSize;
+  private boolean menuActive;
+  private GridBagConstraints gc;
 
   public Interface(Board b) {
     this.setTitle("Demineur");
     this.b = b;
+    this.menuActive = false;
 
     this.view = new View(b, 10);
     view.setBackground(Color.GREEN);
 
     this.pauseMenu = new JPanel(new GridLayout(2,1));
     JButton bRestart = new JButton("Restart");
+    bRestart.addActionListener(new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        Interface.this.dispose();
+        new Menu(Interface.this.b);
+      }
+    });
     this.pauseMenu.add(bRestart);
 
     JButton bQuit = new JButton("Quit");
@@ -35,8 +45,14 @@ public class Interface extends JFrame {
     });
     this.pauseMenu.add(bQuit);
 
-    this.add(view);
-    //this.add(this.pauseMenu);
+    this.setLayout(new GridBagLayout());
+    this.gc = new GridBagConstraints();
+
+    this.gc.gridx = 0;
+    this.gc.gridy = 0;
+
+    this.add(this.view, this.gc);
+
 
     view.addMouseListener(new MouseListener() {
         @Override
@@ -75,7 +91,18 @@ public class Interface extends JFrame {
        @Override
        public void keyPressed(KeyEvent e) {
           if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-
+            Container cp = Interface.this.getContentPane();
+            cp.removeAll();
+            if (Interface.this.menuActive) {
+              cp.add(Interface.this.view, Interface.this.gc);
+              cp.validate();
+              Interface.this.menuActive = false;
+            } else {
+              cp.add(Interface.this.pauseMenu, Interface.this.gc);
+              cp.validate();
+              Interface.this.menuActive = true;
+            }
+            Interface.this.repaint();
           }
        }
 
