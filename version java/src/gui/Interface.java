@@ -26,8 +26,25 @@ public class Interface extends JFrame {
     this.view = new View(b, 10);
     view.setBackground(Color.GREEN);
 
-    this.pauseMenu = new JPanel(new GridLayout(2,1));
+    this.pauseMenu = new JPanel(new GridLayout(4,1,50,50));
     this.pauseMenu.setFocusable(false);
+
+    JButton bResume = new JButton("Resume");
+    bResume.setFocusable(false);
+    bResume.addActionListener(new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        Container cp = Interface.this.getContentPane();
+        cp.removeAll();
+        cp.add(Interface.this.view, Interface.this.gc);
+        cp.validate();
+        Interface.this.menuActive = false;
+        Interface.this.repaint();
+      }
+    });
+
+    this.pauseMenu.add(bResume);
+
     JButton bRestart = new JButton("Restart");
     bRestart.setFocusable(false);
     bRestart.addActionListener(new ActionListener() {
@@ -44,13 +61,24 @@ public class Interface extends JFrame {
     });
     this.pauseMenu.add(bRestart);
 
+    JButton bSelect = new JButton("Select dificulty");
+    bSelect.setFocusable(false);
+    bSelect.addActionListener(new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        new SelectLevel();
+        Interface.this.dispose();
+      }
+    });
+    this.pauseMenu.add(bSelect);
+
     JButton bMenu = new JButton("Back to menu");
     bMenu.setFocusable(false);
     bMenu.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
-        Interface.this.dispose();
         new Menu();
+        Interface.this.dispose();
       }
     });
     this.pauseMenu.add(bMenu);
@@ -152,6 +180,6 @@ public class Interface extends JFrame {
 
     int min = Math.min(sizeWidth,sizeHeight);
 
-    return min - 1;
+    return min;
   }
 }

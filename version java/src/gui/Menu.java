@@ -14,34 +14,46 @@ public class Menu extends JFrame {
     this.setTitle("Demineur");
 
     JPanel zoneButton = new JPanel();
-    zoneButton.setLayout(new GridBagLayout());
-    GridBagConstraints gcb = new GridBagConstraints();
-    gcb.gridx = 0;
-    gcb.gridy = 0;
+    zoneButton.setLayout(new GridLayout(3,1,50,50));
 
     JButton bPlay = new JButton("Play");
+    bPlay.setFocusable(false);
     bPlay.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
+        new SelectLevel();
         Menu.this.dispose();
-        new Interface(new Board(10,10,10));
       }
     });
-    zoneButton.add(bPlay, gcb);
+    zoneButton.add(bPlay);
+
+    JButton bConfigure = new JButton("Configure level");
+    bConfigure.setFocusable(false);
+    bConfigure.addActionListener(new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        //Menu.this.dispose();
+      }
+    });
+
+    zoneButton.add(bConfigure);
 
     JButton bQuit = new JButton("Quit");
+    bQuit.setFocusable(false);
     bQuit.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
         Menu.this.dispose();
       }
     });
-    gcb.gridy = 1;
-    zoneButton.add(bQuit,gcb);
 
-    this.add(zoneButton);
+    zoneButton.add(bQuit);
 
-    this.setLayout(new GridLayout(2,1));
+    this.setLayout(new GridBagLayout());
+    GridBagConstraints gc = new GridBagConstraints();
+
+    this.add(zoneButton, gc);
+
 
     this.setExtendedState(JFrame.MAXIMIZED_BOTH);
     this.setUndecorated(true);
