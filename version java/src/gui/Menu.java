@@ -10,21 +10,24 @@ import game.*;
 
 public class Menu extends JFrame {
 
-  private Board b;
-
-  public Menu(Board b) {
+  public Menu() {
     this.setTitle("Demineur");
-    this.b = b;
+
+    JPanel zoneButton = new JPanel();
+    zoneButton.setLayout(new GridBagLayout());
+    GridBagConstraints gcb = new GridBagConstraints();
+    gcb.gridx = 0;
+    gcb.gridy = 0;
 
     JButton bPlay = new JButton("Play");
     bPlay.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
         Menu.this.dispose();
-        new Interface(Menu.this.b);
+        new Interface(new Board(10,10,10));
       }
     });
-    this.add(bPlay);
+    zoneButton.add(bPlay, gcb);
 
     JButton bQuit = new JButton("Quit");
     bQuit.addActionListener(new ActionListener() {
@@ -33,7 +36,10 @@ public class Menu extends JFrame {
         Menu.this.dispose();
       }
     });
-    this.add(bQuit);
+    gcb.gridy = 1;
+    zoneButton.add(bQuit,gcb);
+
+    this.add(zoneButton);
 
     this.setLayout(new GridLayout(2,1));
 

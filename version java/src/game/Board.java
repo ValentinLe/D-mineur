@@ -11,13 +11,15 @@ public class Board extends AbstractModelListener {
   private int height;
   private Tile[][] grid;
   private boolean over;
+  private int nbBombes;
 
   public Board(int width, int height, int nbBombes) {
     this.width = width;
     this.height = height;
     this.over = false;
+    this.nbBombes = nbBombes;
     createGrid();
-    generateBombe(nbBombes);
+    generateBombe(this.nbBombes);
     calculateNumbers();
   }
 
@@ -75,6 +77,14 @@ public class Board extends AbstractModelListener {
         cpt += 1;
       }
     }
+  }
+
+  public void restart() {
+    this.over = false;
+    createGrid();
+    generateBombe(this.nbBombes);
+    calculateNumbers();
+    this.fireChange();
   }
 
   public boolean isInIndex(int i, int j) {
