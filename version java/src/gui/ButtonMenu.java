@@ -18,8 +18,8 @@ public class ButtonMenu extends JButton implements MouseListener {
     this.text = txt;
     this.hover = false;
     this.click = false;
-    this.width = 300;
-    this.height = 100;
+    this.width = 500;
+    this.height = 200;
     this.size = new Dimension(this.width, this.height);
 
     setVisible(true);
@@ -64,7 +64,7 @@ public class ButtonMenu extends JButton implements MouseListener {
     g.setColor(Color.BLACK);
     Font font = new Font(Font.MONOSPACED, Font.BOLD, 25);
     g.setFont(font);
-    g.drawString(this.text,this.getStringBestWidthSize(font),50);
+    g.drawString(this.text,this.getStringBestWidthSize(font),this.getStringBestHeightSize(font));
 
   }
 
@@ -92,8 +92,16 @@ public class ButtonMenu extends JButton implements MouseListener {
   }
 
   public int getStringBestWidthSize(Font font) {
-    int sizeFont = this.text.length;
-    int bestSize = this.width - sizeFont;
+    FontMetrics fontMetrics = this.getGraphics().getFontMetrics(font);
+    int sizeFont = fontMetrics.stringWidth(this.text);
+    int bestSize = Math.round((this.width - sizeFont)/2);
+    return bestSize;
+  }
+
+  public int getStringBestHeightSize(Font font) {
+    FontMetrics fontMetrics = this.getGraphics().getFontMetrics(font);
+    int sizeFont = fontMetrics.getHeight();
+    int bestSize = Math.round((this.height - sizeFont)/2 + fontMetrics.getAscent());
     return bestSize;
   }
 }
