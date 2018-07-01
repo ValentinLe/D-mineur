@@ -16,7 +16,7 @@ public class Menu extends JFrame {
     JPanel zoneButton = new JPanel();
     zoneButton.setLayout(new GridLayout(3,1,50,50));
 
-    JButton bPlay = new JButton("Play");
+    ButtonMenu bPlay = new ButtonMenu("Play");
     bPlay.setFocusable(false);
     bPlay.addActionListener(new ActionListener() {
       @Override
@@ -27,7 +27,7 @@ public class Menu extends JFrame {
     });
     zoneButton.add(bPlay);
 
-    JButton bConfigure = new JButton("Configure level");
+    ButtonMenu bConfigure = new ButtonMenu("Configure level");
     bConfigure.setFocusable(false);
     bConfigure.addActionListener(new ActionListener() {
       @Override
@@ -38,7 +38,7 @@ public class Menu extends JFrame {
 
     zoneButton.add(bConfigure);
 
-    JButton bQuit = new JButton("Quit");
+    ButtonMenu bQuit = new ButtonMenu("Quit");
     bQuit.setFocusable(false);
     bQuit.addActionListener(new ActionListener() {
       @Override
