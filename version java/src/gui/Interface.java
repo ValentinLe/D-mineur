@@ -22,7 +22,6 @@ public class Interface extends JFrame {
   public Interface(Board b) {
     this.setTitle("Demineur");
     this.b = b;
-    System.out.println("" + this.b.toString());
     this.menuActive = false;
     this.listButton = new ArrayList<>();
 

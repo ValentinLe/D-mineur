@@ -35,7 +35,8 @@ public class Menu extends JFrame {
     bConfigure.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
-        //Menu.this.dispose();
+        new ConfigureLevel();
+        Menu.this.dispose();
       }
     });
 
