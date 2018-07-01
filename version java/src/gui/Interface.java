@@ -31,7 +31,7 @@ public class Interface extends JFrame {
     this.view = new View(b, 10);
     view.setBackground(Color.GREEN);
 
-    this.pauseMenu = new JPanel(new GridLayout(4,1,50,50));
+    this.pauseMenu = new JPanel(new GridLayout(5,1,50,50));
     this.pauseMenu.setFocusable(false);
 
     ButtonMenu bResume = new ButtonMenu("Resume", dimButton, sizeFont);
@@ -81,6 +81,18 @@ public class Interface extends JFrame {
       }
     });
     this.pauseMenu.add(bSelect);
+
+    ButtonMenu bConfigure = new ButtonMenu("Configure Level", dimButton, sizeFont);
+    bConfigure.setFocusable(false);
+    this.listButton.add(bConfigure);
+    bConfigure.addActionListener(new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        new ConfigureLevel();
+        Interface.this.dispose();
+      }
+    });
+    this.pauseMenu.add(bConfigure);
 
     ButtonMenu bMenu = new ButtonMenu("Back to menu", dimButton, sizeFont);
     bMenu.setFocusable(false);
