@@ -6,6 +6,7 @@ import javax.swing.event.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 import game.*;
 
 public class Interface extends JFrame {
@@ -16,12 +17,17 @@ public class Interface extends JFrame {
   private int tileSize;
   private boolean menuActive;
   private GridBagConstraints gc;
+  private ArrayList<ButtonMenu> listButton;
 
   public Interface(Board b) {
     this.setTitle("Demineur");
     this.b = b;
     System.out.println("" + this.b.toString());
     this.menuActive = false;
+    this.listButton = new ArrayList<>();
+
+    Dimension dimButton = new Dimension(500,100);
+    int sizeFont = 25;
 
     this.view = new View(b, 10);
     view.setBackground(Color.GREEN);
@@ -29,8 +35,9 @@ public class Interface extends JFrame {
     this.pauseMenu = new JPanel(new GridLayout(4,1,50,50));
     this.pauseMenu.setFocusable(false);
 
-    JButton bResume = new JButton("Resume");
+    ButtonMenu bResume = new ButtonMenu("Resume", dimButton, sizeFont);
     bResume.setFocusable(false);
+    this.listButton.add(bResume);
     bResume.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
@@ -39,14 +46,16 @@ public class Interface extends JFrame {
         cp.add(Interface.this.view, Interface.this.gc);
         cp.validate();
         Interface.this.menuActive = false;
+        Interface.this.setStateOffAll();
         Interface.this.repaint();
       }
     });
 
     this.pauseMenu.add(bResume);
 
-    JButton bRestart = new JButton("Restart");
+    ButtonMenu bRestart = new ButtonMenu("Restart", dimButton, sizeFont);
     bRestart.setFocusable(false);
+    this.listButton.add(bRestart);
     bRestart.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
@@ -55,14 +64,16 @@ public class Interface extends JFrame {
         cp.add(Interface.this.view, Interface.this.gc);
         cp.validate();
         Interface.this.menuActive = false;
+        Interface.this.setStateOffAll();
         Interface.this.b.restart();
 
       }
     });
     this.pauseMenu.add(bRestart);
 
-    JButton bSelect = new JButton("Select dificulty");
+    ButtonMenu bSelect = new ButtonMenu("Select dificulty", dimButton, sizeFont);
     bSelect.setFocusable(false);
+    this.listButton.add(bSelect);
     bSelect.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
@@ -72,8 +83,9 @@ public class Interface extends JFrame {
     });
     this.pauseMenu.add(bSelect);
 
-    JButton bMenu = new JButton("Back to menu");
+    ButtonMenu bMenu = new ButtonMenu("Back to menu", dimButton, sizeFont);
     bMenu.setFocusable(false);
+    this.listButton.add(bMenu);
     bMenu.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
@@ -135,6 +147,7 @@ public class Interface extends JFrame {
               cp.add(Interface.this.view, Interface.this.gc);
               cp.validate();
               Interface.this.menuActive = false;
+              Interface.this.setStateOffAll();
             } else {
               cp.add(Interface.this.pauseMenu, Interface.this.gc);
               cp.validate();
@@ -167,6 +180,12 @@ public class Interface extends JFrame {
     this.tileSize = getTileSize();
     this.view.setSizeTile(this.tileSize);
     this.repaint();
+  }
+
+  public void setStateOffAll() {
+    for (ButtonMenu button : this.listButton) {
+      button.setStateOff();
+    }
   }
 
   public Integer getTileSize() {

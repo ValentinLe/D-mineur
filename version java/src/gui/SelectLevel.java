@@ -13,11 +13,13 @@ public class SelectLevel extends JFrame {
   public SelectLevel() {
     this.setTitle("Demineur");
 
+    Dimension dimButton = new Dimension(500,100);
+    int sizeFont = 25;
 
     JPanel zoneButton = new JPanel();
     zoneButton.setLayout(new GridLayout(5,1,50,50));
 
-    JButton bEasy = new JButton("Easy");
+    ButtonMenu bEasy = new ButtonMenu("Easy", dimButton, sizeFont);
     bEasy.setFocusable(false);
     bEasy.addActionListener(new ActionListener() {
       @Override
@@ -27,7 +29,7 @@ public class SelectLevel extends JFrame {
       }
     });
 
-    JButton bMedium = new JButton("Medium");
+    ButtonMenu bMedium = new ButtonMenu("Medium", dimButton, sizeFont);
     bMedium.setFocusable(false);
     bMedium.addActionListener(new ActionListener() {
       @Override
@@ -37,7 +39,7 @@ public class SelectLevel extends JFrame {
       }
     });
 
-    JButton bHard = new JButton("Hard");
+    ButtonMenu bHard = new ButtonMenu("Hard", dimButton, sizeFont);
     bHard.setFocusable(false);
     bHard.addActionListener(new ActionListener() {
       @Override
@@ -47,7 +49,7 @@ public class SelectLevel extends JFrame {
       }
     });
 
-    JButton bExtreme = new JButton("Extreme");
+    ButtonMenu bExtreme = new ButtonMenu("Extreme", dimButton, sizeFont);
     bExtreme.setFocusable(false);
     bExtreme.addActionListener(new ActionListener() {
       @Override
@@ -57,7 +59,7 @@ public class SelectLevel extends JFrame {
       }
     });
 
-    JButton bBack = new JButton("Back to menu");
+    ButtonMenu bBack = new ButtonMenu("Back to menu", dimButton, sizeFont);
     bBack.setFocusable(false);
     bBack.addActionListener(new ActionListener() {
       @Override

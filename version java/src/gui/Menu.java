@@ -13,10 +13,13 @@ public class Menu extends JFrame {
   public Menu() {
     this.setTitle("Demineur");
 
+    Dimension dimButton = new Dimension(500,150);
+    int sizeFont = 25;
+
     JPanel zoneButton = new JPanel();
     zoneButton.setLayout(new GridLayout(3,1,50,50));
 
-    ButtonMenu bPlay = new ButtonMenu("Play");
+    ButtonMenu bPlay = new ButtonMenu("Play", dimButton, sizeFont);
     bPlay.setFocusable(false);
     bPlay.addActionListener(new ActionListener() {
       @Override
@@ -27,7 +30,7 @@ public class Menu extends JFrame {
     });
     zoneButton.add(bPlay);
 
-    ButtonMenu bConfigure = new ButtonMenu("Configure level");
+    ButtonMenu bConfigure = new ButtonMenu("Configure level", dimButton, sizeFont);
     bConfigure.setFocusable(false);
     bConfigure.addActionListener(new ActionListener() {
       @Override
@@ -38,7 +41,7 @@ public class Menu extends JFrame {
 
     zoneButton.add(bConfigure);
 
-    ButtonMenu bQuit = new ButtonMenu("Quit");
+    ButtonMenu bQuit = new ButtonMenu("Quit", dimButton, sizeFont);
     bQuit.setFocusable(false);
     bQuit.addActionListener(new ActionListener() {
       @Override

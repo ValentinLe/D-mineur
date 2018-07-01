@@ -13,13 +13,15 @@ public class ButtonMenu extends JButton implements MouseListener {
   private String text;
   private boolean hover;
   private boolean click;
+  private int sizeFont;
 
-  public ButtonMenu(String txt) {
+  public ButtonMenu(String txt, int width, int height, int sizeFont) {
     this.text = txt;
     this.hover = false;
     this.click = false;
-    this.width = 500;
-    this.height = 200;
+    this.width = width;
+    this.height = height;
+    this.sizeFont = sizeFont;
     this.size = new Dimension(this.width, this.height);
 
     setVisible(true);
@@ -27,6 +29,10 @@ public class ButtonMenu extends JButton implements MouseListener {
     setBorderPainted(false);
     addMouseListener(this);
     this.setPreferredSize(this.size);
+  }
+
+  public ButtonMenu(String txt, Dimension dim, int sizeFont) {
+    this(txt, Math.toIntExact((long)dim.getWidth()), Math.toIntExact((long)dim.getHeight()), sizeFont);
   }
 
   @Override
@@ -48,17 +54,15 @@ public class ButtonMenu extends JButton implements MouseListener {
   public void paintComponent(Graphics g) {
     super.paintComponent(g);
 
-    g.setColor(new Color(128,255,210));
-    g.fillRect(0,0, this.width, this.height);
-
-    g.setColor(Color.GREEN);
-    if (this.hover) {
+    if (this.hover && !this.click) {
+      g.setColor(Color.GREEN);
       g.fillRect(0,0,this.width,this.height);
-    }
-
-    g.setColor(Color.RED);
-    if (this.click) {
+    } else if (this.click) {
+      g.setColor(Color.RED);
       g.fillRect(0,0,this.width,this.height);
+    } else {
+      g.setColor(new Color(128,255,210));
+      g.fillRect(0,0, this.width, this.height);
     }
 
     g.setColor(Color.BLACK);
@@ -103,5 +107,10 @@ public class ButtonMenu extends JButton implements MouseListener {
     int sizeFont = fontMetrics.getHeight();
     int bestSize = Math.round((this.height - sizeFont)/2 + fontMetrics.getAscent());
     return bestSize;
+  }
+
+  public void setStateOff() {
+    this.hover = false;
+    this.click = false;
   }
 }
