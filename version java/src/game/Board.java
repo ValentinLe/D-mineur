@@ -12,12 +12,14 @@ public class Board extends AbstractModelListener {
   private Tile[][] grid;
   private boolean over;
   private int nbBombes;
+  private int bombesNoFlag;
 
   public Board(int width, int height, int nbBombes) {
     this.width = width;
     this.height = height;
     this.over = false;
     this.nbBombes = nbBombes;
+    this.bombesNoFlag = nbBombes;
     createGrid();
     generateBombe(this.nbBombes);
     calculateNumbers();
@@ -37,6 +39,14 @@ public class Board extends AbstractModelListener {
 
   public boolean isOver() {
     return this.over;
+  }
+
+  public int getNbBombes() {
+    return this.nbBombes;
+  }
+
+  public int getBombesNoFlag() {
+    return this.bombesNoFlag;
   }
 
   public void createGrid() {
@@ -81,6 +91,7 @@ public class Board extends AbstractModelListener {
 
   public void restart() {
     this.over = false;
+    this.bombesNoFlag = this.nbBombes;
     createGrid();
     generateBombe(this.nbBombes);
     calculateNumbers();
@@ -190,8 +201,10 @@ public class Board extends AbstractModelListener {
     if (!tile.isDiscover()) {
       if (tile.isFlag()) {
         tile.setFlag(false);
-      } else {
+        this.bombesNoFlag += 1;
+      } else if (this.bombesNoFlag != 0) {
         tile.setFlag(true);
+        this.bombesNoFlag -= 1;
       }
     }
     this.fireChange();

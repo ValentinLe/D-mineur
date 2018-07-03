@@ -12,6 +12,7 @@ import game.*;
 public class Interface extends JFrame {
 
   private Board b;
+  private Content cont;
   private View view;
   private JPanel pauseMenu;
   private int tileSize;
@@ -28,10 +29,15 @@ public class Interface extends JFrame {
     Dimension dimButton = new Dimension(500,100);
     int sizeFont = 25;
 
+    this.cont = new Content(this.b);
+
     this.view = new View(b, 10);
     view.setBackground(Color.GREEN);
 
-    this.pauseMenu = new JPanel(new GridLayout(5,1,50,50));
+    this.pauseMenu = new JPanel(new GridBagLayout());
+    GridBagConstraints gcb = new GridBagConstraints();
+    gcb.gridx = 0;
+    gcb.gridy = 0;
     this.pauseMenu.setFocusable(false);
 
     ButtonMenu bResume = new ButtonMenu("Resume", dimButton, sizeFont);
@@ -42,7 +48,7 @@ public class Interface extends JFrame {
       public void actionPerformed(ActionEvent e) {
         Container cp = Interface.this.getContentPane();
         cp.removeAll();
-        cp.add(Interface.this.view, Interface.this.gc);
+        cp.add(Interface.this.cont);
         cp.validate();
         Interface.this.menuActive = false;
         Interface.this.setStateOffAll();
@@ -50,7 +56,6 @@ public class Interface extends JFrame {
       }
     });
 
-    this.pauseMenu.add(bResume);
 
     ButtonMenu bRestart = new ButtonMenu("Restart", dimButton, sizeFont);
     bRestart.setFocusable(false);
@@ -60,7 +65,7 @@ public class Interface extends JFrame {
       public void actionPerformed(ActionEvent e) {
         Container cp = Interface.this.getContentPane();
         cp.removeAll();
-        cp.add(Interface.this.view, Interface.this.gc);
+        cp.add(Interface.this.cont);
         cp.validate();
         Interface.this.menuActive = false;
         Interface.this.setStateOffAll();
@@ -68,7 +73,6 @@ public class Interface extends JFrame {
 
       }
     });
-    this.pauseMenu.add(bRestart);
 
     ButtonMenu bSelect = new ButtonMenu("Select dificulty", dimButton, sizeFont);
     bSelect.setFocusable(false);
@@ -80,7 +84,6 @@ public class Interface extends JFrame {
         Interface.this.dispose();
       }
     });
-    this.pauseMenu.add(bSelect);
 
     ButtonMenu bConfigure = new ButtonMenu("Configure Level", dimButton, sizeFont);
     bConfigure.setFocusable(false);
@@ -92,7 +95,6 @@ public class Interface extends JFrame {
         Interface.this.dispose();
       }
     });
-    this.pauseMenu.add(bConfigure);
 
     ButtonMenu bMenu = new ButtonMenu("Back to menu", dimButton, sizeFont);
     bMenu.setFocusable(false);
@@ -104,16 +106,30 @@ public class Interface extends JFrame {
         Interface.this.dispose();
       }
     });
-    this.pauseMenu.add(bMenu);
 
-    this.setLayout(new GridBagLayout());
+    JPanel zoneButton = new JPanel();
+    zoneButton.setLayout(new GridLayout(5,1,20,20));
+
+    zoneButton.add(bResume);
+    zoneButton.add(bRestart);
+    zoneButton.add(bSelect);
+    zoneButton.add(bConfigure);
+    zoneButton.add(bMenu);
+
+    this.pauseMenu = new JPanel();
+    this.pauseMenu.setBackground(Color.GREEN);
+    this.pauseMenu.add(zoneButton,gcb);
+
+    this.cont.setLayout(new GridBagLayout());
     this.gc = new GridBagConstraints();
 
     this.gc.gridx = 0;
     this.gc.gridy = 0;
 
-    this.add(this.view, this.gc);
+    this.cont.add(this.view, this.gc);
+    this.b.addListener(this.cont);
 
+    this.add(cont);
 
     view.addMouseListener(new MouseListener() {
         @Override
@@ -155,12 +171,12 @@ public class Interface extends JFrame {
             Container cp = Interface.this.getContentPane();
             cp.removeAll();
             if (Interface.this.menuActive) {
-              cp.add(Interface.this.view, Interface.this.gc);
+              cp.add(Interface.this.cont);
               cp.validate();
               Interface.this.menuActive = false;
               Interface.this.setStateOffAll();
             } else {
-              cp.add(Interface.this.pauseMenu, Interface.this.gc);
+              cp.add(Interface.this.pauseMenu);
               cp.validate();
               Interface.this.menuActive = true;
             }
@@ -203,7 +219,7 @@ public class Interface extends JFrame {
     Insets insetsWindow = this.getInsets();
 
     int width = this.getWidth();
-    int height = this.getHeight();
+    int height = this.getHeight() - 26;
 
     int sizeWidth = Math.round(width/this.b.getWidth());
     int sizeHeight = Math.round(height/this.b.getHeight());
