@@ -30,15 +30,11 @@ public class Interface extends JFrame {
     int sizeFont = 25;
 
     this.cont = new Content(this.b);
+    this.cont.setLayout(new BorderLayout());
 
     this.view = new View(b, 10);
     view.setBackground(Color.GREEN);
 
-    this.pauseMenu = new JPanel(new GridBagLayout());
-    GridBagConstraints gcb = new GridBagConstraints();
-    gcb.gridx = 0;
-    gcb.gridy = 0;
-    this.pauseMenu.setFocusable(false);
 
     ButtonMenu bResume = new ButtonMenu("Resume", dimButton, sizeFont);
     bResume.setFocusable(false);
@@ -117,7 +113,11 @@ public class Interface extends JFrame {
     zoneButton.add(bMenu);
 
     this.pauseMenu = new JPanel();
-    this.pauseMenu.setBackground(Color.GREEN);
+    this.pauseMenu.setLayout(new GridBagLayout());
+    GridBagConstraints gcb = new GridBagConstraints();
+    gcb.gridx = 0;
+    gcb.gridy = 0;
+    this.pauseMenu.setFocusable(false);
     this.pauseMenu.add(zoneButton,gcb);
 
     this.cont.setLayout(new GridBagLayout());
