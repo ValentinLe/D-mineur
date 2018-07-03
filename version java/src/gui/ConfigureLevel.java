@@ -117,7 +117,11 @@ public class ConfigureLevel extends JFrame {
     zoneControl.add(zoneNbBombes);
     zoneControl.add(bBack);
 
-    this.add(zoneControl);
+    this.setLayout(new GridBagLayout());
+    GridBagConstraints gc = new GridBagConstraints();
+    gc.gridx = 0;
+    gc.gridy = 0;
+    this.add(zoneControl,gc);
 
     this.setExtendedState(JFrame.MAXIMIZED_BOTH);
     this.setUndecorated(true);
