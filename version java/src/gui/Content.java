@@ -11,15 +11,17 @@ import game.*;
 public class Content extends JPanel implements ModelListener {
 
   private Board b;
+  private Image bombe;
 
   public Content(Board b) {
     this.b = b;
+    this.bombe = Toolkit.getDefaultToolkit().getImage("../ressources/images/bombeIcon.png");
   }
 
   @Override
   public void paintComponent(Graphics g) {
     super.paintComponent(g);
-    g.drawRect(1,1,15,15);
+    g.drawImage(this.bombe,1,1,14,14,this);
     g.drawString("" + this.b.getBombesNoFlag(),18,14);
   }
 

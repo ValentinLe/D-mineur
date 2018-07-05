@@ -33,8 +33,6 @@ public class Interface extends JFrame {
     this.cont.setLayout(new BorderLayout());
 
     this.view = new View(b, 10);
-    view.setBackground(Color.GREEN);
-
 
     ButtonMenu bResume = new ButtonMenu("Resume", dimButton, sizeFont);
     bResume.setFocusable(false);
