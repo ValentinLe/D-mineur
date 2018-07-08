@@ -18,6 +18,9 @@ public class View extends JPanel implements ModelListener {
   private Image bombe;
   private Image bombeActivate;
   private Image flag;
+  private Image tile;
+  private Image tileEmpty;
+  private Image noBombe;
   private int sizeTile;
 
   public View(Board b, int sizeTile) {
@@ -26,6 +29,9 @@ public class View extends JPanel implements ModelListener {
     this.bombe = Toolkit.getDefaultToolkit().getImage("../ressources/images/bombe.png");
     this.bombeActivate = Toolkit.getDefaultToolkit().getImage("../ressources/images/bombeActivate.png");
     this.flag = Toolkit.getDefaultToolkit().getImage("../ressources/images/flag.png");
+    this.tile = Toolkit.getDefaultToolkit().getImage("../ressources/images/tile.png");
+    this.tileEmpty = Toolkit.getDefaultToolkit().getImage("../ressources/images/tileEmpty.png");
+    this.noBombe = Toolkit.getDefaultToolkit().getImage("../ressources/images/noBombe.png");
     this.b.addListener(this);
     this.sizeTile = sizeTile;
     this.dim = new Dimension(b.getWidth()*sizeTile, b.getHeight()*sizeTile);
@@ -38,11 +44,32 @@ public class View extends JPanel implements ModelListener {
     Tile[][] grid = this.b.getGrid();
     for (int j = 0; j<this.b.getHeight(); j++) {
       for (int i = 0; i<this.b.getWidth(); i++) {
-        g.drawRect(i*sizeTile,j*sizeTile,sizeTile,sizeTile);
         if (grid[j][i].isDiscover() && !grid[j][i].isFlag()) {
           // les numeros
-          g.drawImage(this.numbers.get(grid[j][i].getValue()),i*sizeTile,j*sizeTile,sizeTile,sizeTile,this);
-        } else if (grid[j][i].isBombe() && this.b.isOver()) {
+          g.drawImage(this.tileEmpty,i*sizeTile,j*sizeTile,sizeTile,sizeTile,this);
+          if (grid[j][i].getValue() != 0) {
+            g.drawImage(this.numbers.get(grid[j][i].getValue()),i*sizeTile,j*sizeTile,sizeTile,sizeTile,this);
+          }
+        } else if (!grid[j][i].isDiscover() && grid[j][i].isFlag()) {
+          // les drapeaux
+          if (this.b.isOver()) {
+            // fin de partie
+            if (!grid[j][i].isBombe()) {
+              // drapeaux pas bombe
+              g.drawImage(this.tile,i*sizeTile,j*sizeTile,sizeTile,sizeTile,this);
+              g.drawImage(this.noBombe,i*sizeTile,j*sizeTile,sizeTile,sizeTile,this);
+            } else {
+              // bombe drapeaux
+              g.drawImage(this.tile,i*sizeTile,j*sizeTile,sizeTile,sizeTile,this);
+              g.drawImage(this.flag,i*sizeTile,j*sizeTile,sizeTile,sizeTile,this);
+            }
+          } else {
+            g.drawImage(this.tile,i*sizeTile,j*sizeTile,sizeTile,sizeTile,this);
+            g.drawImage(this.flag,i*sizeTile,j*sizeTile,sizeTile,sizeTile,this);
+          }
+
+        } else if (this.b.isOver() && grid[j][i].isBombe()) {
+          g.drawImage(this.tile,i*sizeTile,j*sizeTile,sizeTile,sizeTile,this);
           if (grid[j][i].isBombeClicked()) {
             // bombe cliquee
             g.drawImage(this.bombeActivate,i*sizeTile,j*sizeTile,sizeTile,sizeTile,this);
@@ -50,9 +77,8 @@ public class View extends JPanel implements ModelListener {
             // les autres bombes
             g.drawImage(this.bombe,i*sizeTile,j*sizeTile,sizeTile,sizeTile,this);
           }
-        } else if (!grid[j][i].isDiscover() && grid[j][i].isFlag()) {
-          // les drapeaux
-          g.drawImage(this.flag,i*sizeTile,j*sizeTile,sizeTile,sizeTile,this);
+        } else {
+          g.drawImage(this.tile,i*sizeTile,j*sizeTile,sizeTile,sizeTile,this);
         }
       }
     }
@@ -67,11 +93,10 @@ public class View extends JPanel implements ModelListener {
   public HashMap<Integer,Image> getMapNumbers() {
     HashMap<Integer,Image> map = new HashMap<>();
     Image img;
-    for (int i = 0; i<9; i++) {
+    for (int i = 1; i<9; i++) {
       img = Toolkit.getDefaultToolkit().getImage("../ressources/images/" + i + ".png");
       map.put(i,img);
     }
-    System.out.println("" + map.size());
     return map;
   }
 
