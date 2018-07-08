@@ -44,7 +44,7 @@ public class ConfigureLevel extends JFrame {
     this.labelWidth = new JLabel();
     this.labelWidth.setFocusable(false);
 
-    this.sliderWidth = new JSlider(10,70,10);
+    this.sliderWidth = new JSlider(10,50,10);
     this.sliderWidth.setFocusable(false);
     this.sliderWidth.addChangeListener(new ChangeListener() {
       @Override
@@ -65,7 +65,7 @@ public class ConfigureLevel extends JFrame {
     this.labelHeight = new JLabel();
     this.labelHeight.setFocusable(false);
 
-    this.sliderHeight = new JSlider(10,60,10);
+    this.sliderHeight = new JSlider(10,50,10);
     this.sliderHeight.setFocusable(false);
     this.sliderHeight.addChangeListener(new ChangeListener() {
       @Override
