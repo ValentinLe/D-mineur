@@ -224,7 +224,6 @@ public class Interface extends JFrame {
 
     int min = Math.min(sizeWidth,sizeHeight);
 
-    System.out.println("size : " + min);
     return min;
   }
 }
