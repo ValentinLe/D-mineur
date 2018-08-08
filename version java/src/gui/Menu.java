@@ -16,6 +16,9 @@ public class Menu extends JFrame {
     Dimension dimButton = new Dimension(500,150);
     int sizeFont = 25;
 
+    BackgroundRepeat background = new BackgroundRepeat("../ressources/images/test.png");
+    background.setLayout(new FlowLayout(FlowLayout.CENTER,0,100));
+
     JPanel zoneButton = new JPanel();
     zoneButton.setLayout(new GridLayout(3,1,50,50));
 
@@ -53,11 +56,16 @@ public class Menu extends JFrame {
 
     zoneButton.add(bQuit);
 
-    this.setLayout(new GridBagLayout());
+    JPanel cont = new JPanel();
+    cont.setLayout(new GridBagLayout());
     GridBagConstraints gc = new GridBagConstraints();
 
-    this.add(zoneButton, gc);
+    zoneButton.setOpaque(false);
+    cont.add(zoneButton, gc);
+    cont.setOpaque(false);
 
+    background.add(cont);
+    this.add(background);
 
     this.setExtendedState(JFrame.MAXIMIZED_BOTH);
     this.setUndecorated(true);

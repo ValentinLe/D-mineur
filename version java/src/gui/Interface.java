@@ -29,6 +29,8 @@ public class Interface extends JFrame {
     Dimension dimButton = new Dimension(500,100);
     int sizeFont = 25;
 
+    BackgroundRepeat background = new BackgroundRepeat("../ressources/images/test.jpg");
+
     this.cont = new Content(this.b);
     this.cont.setLayout(new BorderLayout());
 
@@ -127,7 +129,8 @@ public class Interface extends JFrame {
     this.cont.add(this.view, this.gc);
     this.b.addListener(this.cont);
 
-    this.add(cont);
+    background.add(cont);
+    this.add(background);
 
     view.addMouseListener(new MouseListener() {
         @Override
