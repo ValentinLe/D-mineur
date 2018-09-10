@@ -29,8 +29,6 @@ public class Interface extends JFrame {
     Dimension dimButton = new Dimension(500,100);
     int sizeFont = 25;
 
-    BackgroundRepeat background = new BackgroundRepeat("../ressources/images/test.jpg");
-
     this.cont = new Content(this.b);
     this.cont.setLayout(new BorderLayout());
 
@@ -129,8 +127,7 @@ public class Interface extends JFrame {
     this.cont.add(this.view, this.gc);
     this.b.addListener(this.cont);
 
-    background.add(cont);
-    this.add(background);
+    this.add(cont);
 
     view.addMouseListener(new MouseListener() {
         @Override
@@ -217,16 +214,19 @@ public class Interface extends JFrame {
   }
 
   public Integer getTileSize() {
+    Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
     Insets insetsWindow = this.getInsets();
 
-    int width = this.getWidth();
-    int height = this.getHeight() - 26;
+    double width = screenSize.getWidth() - insetsWindow.left - insetsWindow.right;
+    double height = screenSize.getHeight() - insetsWindow.top - insetsWindow.bottom - 26;
+    System.out.println("t : " + insetsWindow.top + " b : " + insetsWindow.bottom);
 
-    int sizeWidth = Math.round(width/this.b.getWidth());
-    int sizeHeight = Math.round(height/this.b.getHeight());
+    double sizeWidth = Math.floor(width/this.b.getWidth());
+    double sizeHeight = Math.floor(height/this.b.getHeight());
 
-    int min = Math.min(sizeWidth,sizeHeight);
+    int min = (int)Math.round(Math.min(sizeWidth,sizeHeight));
 
+    System.out.println("size : " + min);
     return min;
   }
 }
